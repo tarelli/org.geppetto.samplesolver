@@ -1,0 +1,38 @@
+Manifest-Version: 1.0
+Export-Package: com.jogamp.common,
+ com.jogamp.common.jvm,
+ com.jogamp.common.nio,
+ com.jogamp.common.os,
+ com.jogamp.common.type,
+ com.jogamp.common.util,
+ com.jogamp.common.util.locks,
+ com.jogamp.gluegen.runtime,
+ com.jogamp.opencl,
+ com.jogamp.opencl.gl,
+ com.jogamp.opencl.impl,
+ com.jogamp.opencl.util,
+ org.openworm.simulationengine.samplesolver;
+  uses:="org.openworm.simulationengine.core.model,
+   org.openworm.simulationengine.core.solver,
+   org.springframework.stereotype,
+   org.springframework.transaction.annotation"
+Bundle-Vendor: OpenWorm
+Bundle-Version: 1.0.0
+Tool: Bundlor 1.0.0.RELEASE
+Bundle-Name: Sample Solver Provider
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: org.openworm.simulationengine.samplesolver
+Import-Package: org.apache.commons.logging,
+ org.openworm.simulationengine.core,
+ org.openworm.simulationengine.core.model,
+ org.openworm.simulationengine.core.simulation,
+ org.openworm.simulationengine.core.solver,
+ org.springframework.stereotype;version="[3.0.0.RELEASE,3.0.0.RELEASE]",
+ org.springframework.transaction.annotation;version="[3.0.0.RELEASE,3.0.0.RELEASE]"
+Bundle-ClassPath: .,
+ jar/gluegen-rt.jar,
+ jar/jfreechart-1.0.13.jar,
+ jar/jocl.jar,
+ jar/jcommon-1.0.16.jar
+
+
