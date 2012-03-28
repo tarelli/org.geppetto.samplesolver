@@ -27,8 +27,8 @@ Import-Package: org.apache.commons.logging,
  org.openworm.simulationengine.core.model,
  org.openworm.simulationengine.core.simulation,
  org.openworm.simulationengine.core.solver,
- org.springframework.stereotype;version="[3.0.0.RELEASE,3.0.0.RELEASE]",
- org.springframework.transaction.annotation;version="[3.0.0.RELEASE,3.0.0.RELEASE]"
+ org.springframework.stereotype;version="3.0.0.RELEASE",
+ org.springframework.transaction.annotation;version="3.0.0.RELEASE"
 Bundle-ClassPath: .,
  jar/gluegen-rt.jar,
  jar/jfreechart-1.0.13.jar,
