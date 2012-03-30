@@ -5,6 +5,8 @@ import static com.jogamp.opencl.CLMemory.Mem.WRITE_ONLY;
 import static com.jogamp.opencl.CLMemory.Mem.READ_ONLY;
 import static java.lang.System.nanoTime;
 import static java.lang.System.out;
+import static java.lang.Math.*;
+
 
 import java.io.IOException;
 import java.nio.FloatBuffer;
@@ -77,16 +79,7 @@ public class SampleSolverService implements ISolver {
 			float E_Na = 115;
 			float E_Leak = (float) 10.613;
 			/* CONSTANTS */
-
-			// Length of arrays to process
-			int elementCount = models.size();
-			// Local work size dimensions for the selected device
-			int localWorkSize = 0;//min(device.getMaxWorkGroupSize(), 256);
-			// rounded up to the nearest multiple of the localWorkSize
-			int globalWorkSize = elementCount;
-			// results buffers are bigger because we are capturing every value for every item for every time-step
-			int globalWorkSize_Results = elementCount*timeConfiguration.getTimeSteps();
-
+			
 			// load sources, create and build program
 			CLProgram program = null;
 			try {
@@ -94,6 +87,17 @@ public class SampleSolverService implements ISolver {
 			} catch (IOException e) {
 				out.println("Something went *horribly* wrong when loading the kernel!");
 			}
+            
+			// get a reference to the kernel function with the name 'IntegrateHHStep'
+			CLKernel kernel = program.createCLKernel(KERNEL_NAME);
+			
+			// Length of arrays to process
+			int elementCount = models.size();                                  
+			// Local work size dimensions
+            int localWorkSize = min((int)kernel.getWorkGroupSize(device), 256);
+            // rounded up to the nearest multiple of the localWorkSize
+            int globalWorkSize = roundUp(localWorkSize, elementCount);   
+            int globalWorkSize_Plotting = roundUp(localWorkSize, elementCount*timeConfiguration.getTimeSteps());
 
 			/* I/O BUFFERS DECLARATION */
 			CLBuffer<FloatBuffer> I_in_Buffer = context.createFloatBuffer(globalWorkSize, READ_ONLY);
@@ -101,10 +105,10 @@ public class SampleSolverService implements ISolver {
 			CLBuffer<FloatBuffer> x_n_in_Buffer = context.createFloatBuffer(globalWorkSize, READ_WRITE);
 			CLBuffer<FloatBuffer> x_m_in_Buffer = context.createFloatBuffer(globalWorkSize, READ_WRITE);
 			CLBuffer<FloatBuffer> x_h_in_Buffer = context.createFloatBuffer(globalWorkSize, READ_WRITE);
-			CLBuffer<FloatBuffer> V_results_Buffer = context.createFloatBuffer(globalWorkSize_Results, WRITE_ONLY);
-			CLBuffer<FloatBuffer> Xn_results_Buffer = context.createFloatBuffer(globalWorkSize_Results, WRITE_ONLY);
-			CLBuffer<FloatBuffer> Xm_results_Buffer = context.createFloatBuffer(globalWorkSize_Results, WRITE_ONLY);
-			CLBuffer<FloatBuffer> Xh_results_Buffer = context.createFloatBuffer(globalWorkSize_Results, WRITE_ONLY);
+			CLBuffer<FloatBuffer> V_results_Buffer = context.createFloatBuffer(globalWorkSize_Plotting, WRITE_ONLY);
+			CLBuffer<FloatBuffer> Xn_results_Buffer = context.createFloatBuffer(globalWorkSize_Plotting, WRITE_ONLY);
+			CLBuffer<FloatBuffer> Xm_results_Buffer = context.createFloatBuffer(globalWorkSize_Plotting, WRITE_ONLY);
+			CLBuffer<FloatBuffer> Xh_results_Buffer = context.createFloatBuffer(globalWorkSize_Plotting, WRITE_ONLY);
 			/* I/O BUFFERS DECLARATION */
 			
 			// calculates memory used by the device for the input buffers (we have 5 of them, same size)
@@ -114,9 +118,6 @@ public class SampleSolverService implements ISolver {
 			initInputBuffers(models, V_in_Buffer.getBuffer(), x_n_in_Buffer.getBuffer(), x_m_in_Buffer.getBuffer(), x_h_in_Buffer.getBuffer(), I_in_Buffer.getBuffer());
 			// initialize results buffers
 			initResultsBuffers(V_results_Buffer.getBuffer(), Xn_results_Buffer.getBuffer(), Xm_results_Buffer.getBuffer(),Xh_results_Buffer.getBuffer());
-
-			// get a reference to the kernel function with the name 'IntegrateHHStep'
-			CLKernel kernel = program.createCLKernel(KERNEL_NAME);
 
 			long compuTime = nanoTime();
 
