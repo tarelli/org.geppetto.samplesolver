@@ -102,6 +102,21 @@
 			<version>${spring.version}</version>
 			<scope>test</scope>
 		</dependency>
+				<dependency>
+			<groupId>jfree</groupId>
+			<artifactId>jfreechart</artifactId>
+			<version>1.0.13</version>
+		</dependency>
+		<dependency>
+			<groupId>jfree</groupId>
+			<artifactId>jcommon</artifactId>
+			<version>1.0.16</version>
+		</dependency>
+		<dependency>
+			<groupId>com.nativelibs4java</groupId>
+			<artifactId>javacl-osgi</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
 		<!-- dm Server library definitions -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -136,6 +151,18 @@
 			<name>SpringSource Enterprise Bundle Repository - External Library Releases</name>
 			<url>http://repository.springsource.com/maven/libraries/external</url>
 		</repository>
+ 	<repository>
+      <id>sonatype</id>
+      <name>Sonatype OSS Snapshots Repository</name>
+      <url>http://oss.sonatype.org/content/groups/public</url>
+    </repository>
+		<repository>
+      <id>nativelibs4java</id>
+      <name>nativelibs4java Maven2 Repository</name>
+      <url>http://nativelibs4java.sourceforge.net/maven</url>
+    </repository>
+		
+		
 	</repositories>
 	<build>
 		<plugins>
@@ -154,7 +181,27 @@
 					<manifestFile>src/main/java/META-INF/MANIFEST.MF</manifestFile>
 				</configuration>
 			</plugin>
+
 			<plugin>
+                 <groupId>org.apache.maven.plugins</groupId>               
+                 <artifactId>maven-dependency-plugin</artifactId>
+                <configuration>
+				<outputDirectory>${project.build.outputDirectory}/lib</outputDirectory>
+                      <includeScope>runtime</includeScope>
+                      <excludeScope>provided</excludeScope>
+                  </configuration>
+                  <executions>
+                      <execution>
+                          <id>copy-dependencies</id>
+                          <phase>generate-resources</phase>
+                          <goals>
+                              <goal>copy-dependencies</goal>
+                          </goals>
+                      </execution>
+                  </executions>
+ 		</plugin>
+ 		
+ 					<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-dependency-plugin</artifactId>
 				<executions>
@@ -167,6 +214,36 @@
 					</execution>
 				</executions>
 			</plugin>
+			
+			
 		</plugins>
+		
+		<pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.eclipse.m2e</groupId>          
+          <artifactId>lifecycle-mapping</artifactId>          
+          <version>1.0.0</version>
+         <configuration>            <lifecycleMappingMetadata>
+              <pluginExecutions>              <pluginExecution>
+              <pluginExecutionFilter>
+                  <groupId>org.apache.maven.plugins</groupId>
+                   <artifactId>maven-dependency-plugin</artifactId>
+                  <versionRange>[2.0,)</versionRange>
+                  <goals>
+                      <goal>copy-dependencies</goal>
+                    </goals>
+                  </pluginExecutionFilter>
+                  <action>
+                    <ignore />
+                  </action>
+                </pluginExecution>
+              </pluginExecutions>
+            </lifecycleMappingMetadata>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+    
 	</build>
 </project>
