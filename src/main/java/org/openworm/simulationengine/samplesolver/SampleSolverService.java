@@ -48,8 +48,7 @@ public class SampleSolverService implements ISolver {
 	float E_Na = 115;
 	float E_Leak = (float) 10.613;
 
-	public List<List<IModel>> solve(final List<IModel> models,
-			final ITimeConfiguration timeConfiguration) {
+	public List<List<IModel>> solve(final List<IModel> models, final ITimeConfiguration timeConfiguration) {
 		out.println("Solver invoked with " + models.size() + " models");
 
 		_models = models;
@@ -92,12 +91,11 @@ public class SampleSolverService implements ISolver {
 
 			long compuTime = nanoTime();
 
-			integrateHHStepKernel.setArgs(maxG_K, maxG_Na, maxG_Leak, E_K,
-					E_Na, E_Leak, timeConfiguration.getTimeStepLength(),
-					timeConfiguration.getTimeSteps(), I_in_Buffer, V_in_Buffer,
-					x_n_in_Buffer, x_m_in_Buffer, x_h_in_Buffer,
-					V_results_Buffer, Xn_results_Buffer, Xm_results_Buffer,
-					Xh_results_Buffer, ELEM_COUNT);
+			integrateHHStepKernel.setArgs(maxG_K, maxG_Na, maxG_Leak, 
+										  E_K, E_Na, E_Leak, 
+										  timeConfiguration.getTimeStepLength(), timeConfiguration.getTimeSteps(), 
+										  I_in_Buffer, V_in_Buffer, x_n_in_Buffer, x_m_in_Buffer, x_h_in_Buffer,
+										  V_results_Buffer, Xn_results_Buffer, Xm_results_Buffer, Xh_results_Buffer, ELEM_COUNT);
 
 			int[] globalSizes = new int[] { ELEM_COUNT };
 			CLEvent integrateEvt = integrateHHStepKernel.enqueueNDRange(queue, globalSizes);
