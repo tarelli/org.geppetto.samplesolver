@@ -434,7 +434,6 @@ public class ExampleServiceImplTests {
 	
 	/**
 	 * Tests the solver in the scenario of I_Ext = 0 over 130 ms in one single go.
-	 * NOTE: reference curve is "I_ext 0" to be found in reference_curves folder in this project
 	 */
 	@Test
 	public void testThatOutputMatchesInput() {
@@ -460,6 +459,40 @@ public class ExampleServiceImplTests {
 		
 		assertTrue(resultsBuffer.size() == ELEM_COUNT);
 		assertTrue(resultsBuffer.get(0).size() == steps);
+	}
+	
+	/**
+	 * Tests custom smapling for the the solver in the scenario of I_Ext = 0 over 130 ms in one single go
+	 */
+	@Test
+	public void testThatOutputMatchesInputWithCustomSampling() {
+		// define some parameters for the test
+		int ELEM_COUNT = 30;
+		// all times in ms
+		float START_TIME = -30;
+		float END_TIME = 100;
+		float dt = (float) 0.01;
+		// calculate how many steps for the given dt
+		int steps = (int) ((int)(END_TIME - START_TIME)/dt);
+		
+		// create the models to be simulated
+		List<IModel> models = new ArrayList<IModel>();	
+		for(int j=0; j < ELEM_COUNT; j++)
+		{
+			models.add(new HHModel(Integer.toString(j),/*initial V condition is -10*/-10, 0, 0, -1,/*set current to 0 and never change it*/0));
+		}
+		
+		for(int i = 2; i < 5; i++)
+		{
+			int SAMPLE_PERIOD = i;
+			
+			// invoke solve method
+			ITimeConfiguration timeConfig=new TimeConfiguration(new Float(0.01),steps,SAMPLE_PERIOD);
+			List<List<IModel>> resultsBuffer = alphaSolver.solve(models, timeConfig);
+			
+			assertTrue(resultsBuffer.size() == ELEM_COUNT);
+			assertTrue(resultsBuffer.get(0).size() == steps / SAMPLE_PERIOD);
+		}
 	}
 	
 	
