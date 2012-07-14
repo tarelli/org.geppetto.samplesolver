@@ -1,4 +1,4 @@
-#Hodgkin Huxley sample solver for the simualation engine for the OpenWorm project
+#Hodgkin Huxley sample solver for the simulation engine for the OpenWorm project
 
 http://openworm.org
 
