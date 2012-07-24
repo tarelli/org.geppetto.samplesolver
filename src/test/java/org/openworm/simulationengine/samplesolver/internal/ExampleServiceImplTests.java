@@ -39,7 +39,7 @@ public class ExampleServiceImplTests {
 	@Test
 	public void testSolveInSingleGo() {
 		// define some parameters for the test
-		boolean PLOTTING = true;
+		boolean PLOTTING = false;
 		int SAMPLES = 3;
 		int ELEM_COUNT = 30;
 		// all times in ms
@@ -118,7 +118,7 @@ public class ExampleServiceImplTests {
 	@Test
 	public void testSolveInMultipleSteps() {
 		// define some parameters for the test
-		boolean PLOTTING = true;
+		boolean PLOTTING = false;
 		int SAMPLES = 3;
 		int ELEM_COUNT = 30;
 		// all times in ms
