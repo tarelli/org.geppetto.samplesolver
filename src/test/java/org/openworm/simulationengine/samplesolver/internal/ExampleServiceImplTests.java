@@ -39,7 +39,7 @@ public class ExampleServiceImplTests {
 	@Test
 	public void testSolveInSingleGo() {
 		// define some parameters for the test
-		boolean PLOTTING = false;
+		boolean PLOTTING = true;
 		int SAMPLES = 3;
 		int ELEM_COUNT = 30;
 		// all times in ms
@@ -47,13 +47,14 @@ public class ExampleServiceImplTests {
 		float END_TIME = 100;
 		float dt = (float) 0.01;
 		int steps = (int) ((int)(END_TIME - START_TIME)/dt);
+		float I_Ext = 0.0f;
 		
 		// create the 302 models to be simulated
 		List<IModel> models = new ArrayList<IModel>();	
 			
 		for(int j=0; j < ELEM_COUNT; j++)
 		{
-			models.add(new HHModel(Integer.toString(j), -10, 0, 0, 1, 0.0f));
+			models.add(new HHModel(Integer.toString(j), -10, 0, 0, 1, I_Ext));
 		}
 		
 		// invoke solve method
@@ -117,7 +118,7 @@ public class ExampleServiceImplTests {
 	@Test
 	public void testSolveInMultipleSteps() {
 		// define some parameters for the test
-		boolean PLOTTING = false;
+		boolean PLOTTING = true;
 		int SAMPLES = 3;
 		int ELEM_COUNT = 30;
 		// all times in ms
@@ -125,13 +126,14 @@ public class ExampleServiceImplTests {
 		float END_TIME = 100;
 		float dt = (float) 0.01;
 		int steps = (int) ((int)(END_TIME - START_TIME)/dt);
+		float I_Ext = 0.0f;
 		
 		// create the 302 models to be simulated
 		List<IModel> models = new ArrayList<IModel>();	
 			
 		for(int j=0; j < ELEM_COUNT; j++)
 		{
-			models.add(new HHModel(Integer.toString(j),-10, 0, 0, 1,0));
+			models.add(new HHModel(Integer.toString(j),-10, 0, 0, 1, I_Ext));
 		}
 		
 		// break it in 100 intervals and append results each time the solver runs
@@ -149,6 +151,7 @@ public class ExampleServiceImplTests {
 				Iterator itr = tempResultsBuffer.iterator(); 
 				while(itr.hasNext()) {
 				    List<IModel> modelSnapshots = (List<IModel>) itr.next(); 
+				    ((HHModel)modelSnapshots.get(steps/SCALE_FACTOR-1)).setI(I_Ext);
 					// grab final conditions from previous cycle
 					models.add(modelSnapshots.get(steps/SCALE_FACTOR-1));
 				} 
