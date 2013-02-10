@@ -1,5 +1,5 @@
-#Hodgkin Huxley sample solver for the simulation engine for the OpenWorm project
+#Sample neuronal solver
 
-http://openworm.org
+Proof of concept Hodgkin Huxley neuronal solver for the [OpenWorm](http://openworm.org) simulation engine, built on OpenCL (runs on CPU and GPU).
 
 Please see installation information [available online](http://bit.ly/NBuKjd).
