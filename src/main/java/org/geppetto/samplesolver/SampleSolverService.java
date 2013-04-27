@@ -1,4 +1,4 @@
-package org.openworm.simulationengine.samplesolver;
+package org.geppetto.samplesolver;
 
 import static java.lang.System.nanoTime;
 import static java.lang.System.out;
@@ -8,10 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bridj.Pointer;
-import org.openworm.simulationengine.core.model.HHModel;
-import org.openworm.simulationengine.core.model.IModel;
-import org.openworm.simulationengine.core.simulation.ITimeConfiguration;
-import org.openworm.simulationengine.core.solver.ISolver;
+import org.geppetto.core.model.HHModel;
+import org.geppetto.core.model.IModel;
+import org.geppetto.core.simulation.ITimeConfiguration;
+import org.geppetto.core.solver.ISolver;
 import org.springframework.stereotype.Service;
 
 import static org.bridj.Pointer.allocateFloats;

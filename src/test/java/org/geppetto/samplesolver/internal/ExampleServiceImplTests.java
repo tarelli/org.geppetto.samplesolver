@@ -1,4 +1,4 @@
-package org.openworm.simulationengine.samplesolver.internal;
+package org.geppetto.samplesolver.internal;
 
 import static org.junit.Assert.*;
 
@@ -17,11 +17,11 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 import org.junit.Test;
-import org.openworm.simulationengine.core.model.HHModel;
-import org.openworm.simulationengine.core.model.IModel;
-import org.openworm.simulationengine.core.simulation.ITimeConfiguration;
-import org.openworm.simulationengine.core.simulation.TimeConfiguration;
-import org.openworm.simulationengine.samplesolver.SampleSolverService;
+import org.geppetto.core.model.HHModel;
+import org.geppetto.core.model.IModel;
+import org.geppetto.core.simulation.ITimeConfiguration;
+import org.geppetto.core.simulation.TimeConfiguration;
+import org.geppetto.samplesolver.SampleSolverService;
 
 /**
  * JUnit test for the example solver implementation. Such a unit test tests
