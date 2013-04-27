@@ -8,5 +8,5 @@
 		and configure -->
 	<context:annotation-config />
 	<context:component-scan
-		base-package="org.openworm.simulationengine.samplesolver" />
+		base-package="org.geppetto.samplesolver" />
 </beans>
