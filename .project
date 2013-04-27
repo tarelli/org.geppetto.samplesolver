@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>org.openworm.simulationengine.samplesolver</name>
+	<name>org.geppetto.samplesolver</name>
 	<comment></comment>
 	<projects>
-		<project>org.openworm.simulationengine.core</project>
+		<project>org.geppetto.core</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

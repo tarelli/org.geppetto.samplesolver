@@ -12,7 +12,7 @@
 	</appender>
 
 	<!-- Application loggers -->
-	<logger name="org.openworm.simulationengine.samplesolver">
+	<logger name="org.geppetto.samplesolver">
 		<level value="debug" />
 	</logger>
 	
